@@ -1,0 +1,16 @@
+services:
+  database:
+    image: "postgres"
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=wallet-local
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DATABASE=wallet-local
+    volumes:
+      - wallet-database:/var/lib/postgresql/data
+
+
+volumes:
+  wallet-database:
+    driver: local
