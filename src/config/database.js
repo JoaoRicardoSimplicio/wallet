@@ -2,7 +2,7 @@ const { Sequelize } = require('sequelize');
 const config = require('./config');
 
 
-const env = process.env.NODE_ENV || 'development';
+const env = process.env.NODE_ENV || 'local';
 
 
 const database = new Sequelize(config[env].database, config[env].username, config[env].password, {
