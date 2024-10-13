@@ -10,4 +10,10 @@ async function getOrCreateCategory(category){
 }
 
 
-module.exports = getOrCreateCategory;
+async function getCategory(name){
+  const category = await Category.findOne({ where: { name: name }});
+  return category;
+}
+
+
+module.exports = { getCategory, getOrCreateCategory };

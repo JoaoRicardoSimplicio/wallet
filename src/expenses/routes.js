@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const { createExpense, getExpenses, getExpensesSum } = require('./controller');
-const getOrCreateCategory = require('../category/controller');
+const { getCategory, getOrCreateCategory } = require('../category/controller');
 
 
 router.get('/', async (req, res) => {
@@ -30,7 +30,7 @@ router.post('/', async (req, res) => {
     const { description, value, date, category } = req.body;
     console.log(description, value, date, category)
 
-    const categoryInstance = await getOrCreateCategory(category);
+    const categoryInstance = await getCategory(category);
     const expense = await createExpense(
       description,
       value,
