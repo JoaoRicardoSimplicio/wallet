@@ -1,6 +1,6 @@
 const { Op, col, fn } = require('sequelize');
 
-const Expense = require('./models/expense');
+const { expenseBudget, Expense } = require('./models/expense');
 const Category = require('../category/models/category');
 
 
