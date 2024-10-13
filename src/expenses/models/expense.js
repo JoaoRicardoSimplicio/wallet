@@ -20,6 +20,11 @@ const expenseBudget = database.define('expenseBudget', {
     references: {
       model: 'Category',
     },
+  },
+  budgetBy: {
+    type: DataTypes.ENUM('day', 'week', 'month', 'year'),
+    allowNull: false,
+    defaultValue: 'month'
   }}, {
     tableName: 'expenseBudget',
     timestamps: true
