@@ -10,7 +10,15 @@ router.get('/', async (req, res) => {
 
   try {
     const expenses = await getExpenses(year, month, category);
-    res.status(200).json(expenses);
+
+    const serializedExpenses = expenses.map(expense => ({
+      description: expense.description,
+      value: expense.value,
+      date: expense.date,
+      category: expense.category.name
+    }));
+
+    res.status(200).json(serializedExpenses);
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: error.message });

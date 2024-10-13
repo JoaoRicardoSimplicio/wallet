@@ -51,7 +51,12 @@ async function getExpenses(year, month, category){
   }
 
   const expenses = await Expense.findAll({
-    where: whereClause
+    where: whereClause,
+    include: [{
+      model: Category,
+      as: 'category',
+      attributes: ['name']
+    }]
   });
 
   return expenses;
