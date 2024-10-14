@@ -27,7 +27,17 @@ module.exports = {
         type: Sequelize.ENUM('day', 'week', 'month', 'year'),
         allowNull: false,
         defaultValue: 'month'
-      }
+      },
+      createdAt: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.NOW,
+      },
+      updatedAt: {
+        type: Sequelize.DATE, // Type for updatedAt
+        allowNull: false,     // Cannot be NULL
+        defaultValue: Sequelize.NOW, // Default to current date and time
+      },
     });
 
     await queryInterface.addConstraint('expenseBudget', {
