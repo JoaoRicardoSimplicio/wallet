@@ -1,7 +1,7 @@
 const { Op, col, fn } = require('sequelize');
 
-const { expenseBudget, Expense } = require('./models/expense');
-const Category = require('../category/models/category');
+const Expense = require('../models/expense');
+const Category = require('../../category/models/category');
 
 
 class InvalidData extends Error {
