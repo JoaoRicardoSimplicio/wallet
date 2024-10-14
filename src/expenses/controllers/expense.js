@@ -1,6 +1,7 @@
 const { Op, col, fn } = require('sequelize');
 
 const Expense = require('../models/expense');
+const { getCategory } = require('../../category/controller');
 const Category = require('../../category/models/category');
 
 
@@ -77,13 +78,14 @@ async function createExpense(
   description,
   value,
   date,
-  categoryId
+  category
 ){
+  const categoryInstance = await getCategory({ 'categoryName': category });
   const expense = await Expense.create({
     description: description,
     value: value,
     date: date,
-    categoryId: categoryId
+    categoryId: categoryInstance.id
   });
 
   return expense;

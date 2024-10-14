@@ -3,7 +3,6 @@ const router = express.Router();
 
 const { createExpense, getExpenses, getExpensesSum } = require('./controllers/expense');
 const createExpenseBudget = require('./controllers/expenseBudget');
-const { getCategory } = require('../category/controller');
 
 
 router.get('/', async (req, res) => {
@@ -31,12 +30,11 @@ router.post('/', async (req, res) => {
     const { description, value, date, category } = req.body;
     console.log(description, value, date, category)
 
-    const categoryInstance = await getCategory({ 'categoryName': category });
     const expense = await createExpense(
       description,
       value,
       date,
-      categoryInstance.id
+      category
     );
 
     res.status(201).json(expense);
@@ -51,8 +49,7 @@ router.post('/budget', async(req, res) => {
   const { value, category, budgetBy } = req.body;
 
   try {
-    const categoryInstance = await getCategory({ 'categoryName': category });
-    const expenseBudget = await createExpenseBudget(value, categoryInstance, budgetBy);
+    const expenseBudget = await createExpenseBudget(value, category, budgetBy);
     res.status(201).json(expenseBudget)
   } catch (error) {
     console.log(error);
