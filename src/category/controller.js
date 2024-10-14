@@ -10,8 +10,8 @@ async function getOrCreateCategory(category){
 }
 
 
-async function getCategory(name){
-  const category = await Category.findOne({ where: { name: name }});
+async function getCategory({ categoryName }){
+  const category = await Category.findOne({ where: { name: categoryName }});
   return category;
 }
 
