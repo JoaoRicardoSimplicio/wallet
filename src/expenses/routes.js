@@ -1,8 +1,9 @@
 const express = require('express');
 const router = express.Router();
 
-const { createExpense, getExpenses, getExpensesSum } = require('./controller');
-const { getCategory, getOrCreateCategory } = require('../category/controller');
+const { createExpense, getExpenses, getExpensesSum } = require('./controllers/expense');
+const createExpenseBudget = require('./controllers/expenseBudget');
+const { getCategory } = require('../category/controller');
 
 
 router.get('/', async (req, res) => {
@@ -30,7 +31,7 @@ router.post('/', async (req, res) => {
     const { description, value, date, category } = req.body;
     console.log(description, value, date, category)
 
-    const categoryInstance = await getCategory(category);
+    const categoryInstance = await getCategory({ 'categoryName': category });
     const expense = await createExpense(
       description,
       value,
@@ -46,6 +47,19 @@ router.post('/', async (req, res) => {
   }
 });
 
+router.post('/budget', async(req, res) => {
+  const { value, category, budgetBy } = req.body;
+
+  try {
+    const categoryInstance = await getCategory({ 'categoryName': category });
+    const expenseBudget = await createExpenseBudget(value, categoryInstance, budgetBy);
+    res.status(201).json(expenseBudget)
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
 router.get('/sum', async (req, res) => {
   const { year, month, category } = req.query;
 
@@ -56,7 +70,7 @@ router.get('/sum', async (req, res) => {
     console.log(error);
     res.status(500).json({ error: error.message }); 
   }
-})
+});
 
 
 module.exports = router;
