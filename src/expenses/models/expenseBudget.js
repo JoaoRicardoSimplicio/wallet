@@ -4,25 +4,11 @@ const Category = require('../../category/models/category');
 const database = require('../../config/database');
 
 
-const Expense = database.define('Expense', {
+const expenseBudget = database.define('expenseBudget', {
   id: {
     type: DataTypes.UUID,
     primaryKey: true,
     defaultValue: DataTypes.UUIDV4
-  },
-  description: {
-    type: DataTypes.STRING(255),
-    allowNull: false,
-    validate: {
-      len: {
-        args: [1, 255],
-        msg: 'Description must have less than 255 characters'
-      }
-    }
-  },
-  date: {
-    type: DataTypes.DATEONLY,
-    defaultValue: DataTypes.NOW
   },
   value: {
     type: DataTypes.DOUBLE,
@@ -34,13 +20,18 @@ const Expense = database.define('Expense', {
     references: {
       model: 'Category',
     },
+  },
+  budgetBy: {
+    type: DataTypes.ENUM('day', 'week', 'month', 'year'),
+    allowNull: false,
+    defaultValue: 'month'
   }}, {
-    tableName: 'Expense',
+    tableName: 'expenseBudget',
     timestamps: true
   }
 );
 
-Expense.belongsTo(Category, { foreignKey: 'categoryId', as: 'category' });
+expenseBudget.belongsTo(Category, { foreignKey: 'categoryId', as: 'category' });
 
 
-module.exports = Expense;
+module.exports = expenseBudget;
